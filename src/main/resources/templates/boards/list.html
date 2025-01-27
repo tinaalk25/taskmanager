@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+  <title>Kanban Boards</title>
+</head>
+
+<body>
+    <h1>Kanban Boards</h1>
+    <a href="/boards/create">Create New Board</a>
+    <ul>
+        <li th:each="board : ${boards}">
+            <a th:href="@{/boards/{id}(id=${board.id})}" th:text="${board.title}"></a>
+        </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+ <title>Create Kanban Board</title>
+</head>
+
+<body>
+    <h1 th:text="${board.title}"></h1>
+    <h2>Tasks</h2>
+    <form action="#" th:action="@{/tasks/create}" method="post">
+        <input type="hidden" name="boardId" th:value="${board.id}" />
+        <label for="taskTitle">Task Title:</label>
+        <input type="text" name="title" id="taskTitle" required />
+        <label for="taskDescription">Description:</label>
+        <input type="text" name="description" id="taskDescription" />
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        <li th:each="task : ${tasks}">
+            <span th:text="${task.title}"></span> -
+            <span th:text="${task.status}"></span>
+            <div>
+                <h3>Tags:</h3>
+                <ul>
+                    <li th:each="tag : ${task.tags}">
+                        <span th:text="${tag.name}"></span>
+                        <form action="#" th:action="@{/tasks/remove-tag/{taskId}/{tagId}(taskId=${task.id}, tagId=${tag.id})}" method="post">
+                            <button type="submit">Remove Tag</button>
+                        </form>
+                    </li>
+                </ul>
+                <form action="#" th:action="@{/tasks/add-tag/{id}(id=${task.id})}" method="post">
+                    <input type="text" name="tagName" placeholder="Add tag" required />
+                    <button type="submit">Add Tag</button>
+                </form>
+            </div>
+            <form action="#" th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+</body>
+</html>
+
